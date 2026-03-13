@@ -2,46 +2,93 @@
 <html>
 <head>
 <title>Matindra Tripura</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 
 body{
 font-family: Arial;
 margin:0;
-background:#f4f4f4;
+background:#f5f5f5;
 }
 
 header{
-background:#222;
+background:black;
 color:white;
-padding:25px;
+padding:20px;
 text-align:center;
 }
 
-button{
-padding:10px 15px;
+.container{
+width:90%;
+margin:auto;
+}
+
+.map-btn{
 background:#28a745;
-border:none;
 color:white;
+padding:10px 15px;
+border:none;
+cursor:pointer;
+margin-top:10px;
+}
+
+.search{
+width:100%;
+padding:12px;
+margin:20px 0;
+font-size:16px;
+}
+
+.categories button{
 margin:5px;
+padding:10px 15px;
+border:none;
+background:#ddd;
 cursor:pointer;
 }
 
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:20px;
-padding:20px;
 }
 
 .card{
 background:white;
-padding:15px;
+padding:10px;
 border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.2);
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+.contact-btn{
+margin-top:10px;
+display:flex;
+gap:10px;
+}
+
+.whatsapp{
+background:#25D366;
+color:white;
+padding:8px;
+text-decoration:none;
+}
+
+.call{
+background:#007bff;
+color:white;
+padding:8px;
+text-decoration:none;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -49,43 +96,132 @@ box-shadow:0 2px 6px rgba(0,0,0,0.2);
 <header>
 
 <h1>Matindra Tripura</h1>
+
 <p>Kowaifung Hati</p>
 
-<a href="https://maps.app.goo.gl/pbiqew7ExDDF28eL6">
-<button>📍 View Shop Location</button>
-</a>
-
-<a href="https://wa.me/9863653392">
-<button>WhatsApp</button>
-</a>
-
-<a href="tel:9863653392">
-<button>Call</button>
-</a>
+<button class="map-btn"
+onclick="window.open('https://maps.app.goo.gl/pbiqew7ExDDF28eL6')">
+View Shop Location
+</button>
 
 </header>
 
-<div class="products">
 
-<div class="card">
-<h3>Rinai</h3>
-<p>Traditional Tripuri Dress</p>
-<p>Price ₹1500</p>
-</div>
+<div class="container">
 
-<div class="card">
-<h3>Risa</h3>
-<p>Traditional Cloth</p>
-<p>Price ₹500</p>
-</div>
+<input type="text" id="search" class="search"
+placeholder="Search products..." onkeyup="searchProduct()">
 
-<div class="card">
-<h3>Takborok Kamchilik</h3>
-<p>Traditional Clothing</p>
-<p>Price ₹1200</p>
-</div>
+
+<div class="categories">
+
+<button onclick="filter('all')">All</button>
+<button onclick="filter('rinai')">Rinai</button>
+<button onclick="filter('risa')">Risa</button>
+<button onclick="filter('takborok')">Takborok Kamchilik</button>
+<button onclick="filter('tiprasani')">Tiprasani Kanmung Chumung</button>
 
 </div>
+
+
+<div class="products" id="products">
+
+
+<div class="card" data-category="rinai">
+
+<img src="https://via.placeholder.com/200">
+
+<h3>Rinai Traditional Dress</h3>
+
+<p>Price: ₹1500</p>
+
+<div class="contact-btn">
+
+<a class="whatsapp"
+href="https://wa.me/9863653392?text=Hello%20I%20am%20interested%20in%20Rinai%20Traditional%20Dress"
+target="_blank">
+WhatsApp
+</a>
+
+<a class="call" href="tel:9863653392">
+Call
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card" data-category="risa">
+
+<img src="https://via.placeholder.com/200">
+
+<h3>Risa Cloth</h3>
+
+<p>Price: ₹500</p>
+
+<div class="contact-btn">
+
+<a class="whatsapp"
+href="https://wa.me/9863653392?text=Hello%20I%20am%20interested%20in%20Risa%20Cloth"
+target="_blank">
+WhatsApp
+</a>
+
+<a class="call" href="tel:9863653392">
+Call
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+function searchProduct(){
+
+let input=document.getElementById("search").value.toLowerCase()
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+let text=card.innerText.toLowerCase()
+
+card.style.display=text.includes(input)?"block":"none"
+
+})
+
+}
+
+function filter(category){
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+if(category=="all"||card.dataset.category==category){
+
+card.style.display="block"
+
+}else{
+
+card.style.display="none"
+
+}
+
+})
+
+}
+
+</script>
+
 
 </body>
 </html>
